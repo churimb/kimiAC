@@ -1,4 +1,4 @@
-package kimiAC
+package AhoCorasick
 
 import (
 	"encoding/json"

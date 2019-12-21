@@ -1,4 +1,4 @@
-package kimiAC
+package AhoCorasick
 
 type AcNode struct {
 	fail	*AcNode
