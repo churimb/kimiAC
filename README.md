@@ -1,6 +1,8 @@
 # 用法
 
-支持添加自己的匹配信息
+学习用GO实现AC自动机（Aho-Corasick automation），支持添加自己的匹配信息。
+
+使用例子如下：
 
 ```go
 acm := NewAhoCorasick()
