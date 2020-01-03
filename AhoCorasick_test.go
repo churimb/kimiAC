@@ -27,14 +27,6 @@ func TestAc(t *testing.T) {
 
 	for _, result := range res {
 		fmt.Println(result)
-		//var json_data interface{}
-		//fmt.Println(result)
-		//err := json.Unmarshal([]byte(result), &json_data)
-		//if err != nil  {
-		//	fmt.Println(err)
-		//}
-		//buf, _ := json.Marshal(json_data)
-		//fmt.Println(string(buf))
 	}
 }
 
