@@ -47,24 +47,40 @@ func (ac Ac) Insert(s string, signature string) {
 		}
 		iter = iter.next[c]
 	}
-	if iter.signature == nil {
-		iter.signature = []string{signature}
-	} else {
-		iter.signature = append(iter.signature, signature)
-	}
+
 	if iter != ac.root {
 		iter.isend = true
+		if iter.signature == nil {
+			iter.signature = []string{signature}
+		} else {
+			iter.signature = append(iter.signature, signature)
+		}
 	}
 }
 
 func (ac Ac) Build() {
-	tmplist := []*AcNode{} // 临时存放节点
+	var tmplist []*AcNode
+
+	tmplist = []*AcNode{}
+	tmplist = append(tmplist, ac.root)
+	for len(tmplist) != 0 {
+		parrent := tmplist[0]; tmplist = tmplist[1:]  // pop
+		if parrent.fail == nil {
+			if parrent != ac.root {
+				parrent.fail = ac.root
+			}
+		}
+		for _, child := range parrent.next {
+			tmplist = append(tmplist, child)
+		}
+	}
+
+	tmplist = []*AcNode{} // 临时存放节点
 
 	tmplist = append(tmplist, ac.root) // 从根节点开始
 
 	for len(tmplist) != 0 {
-		parrent := tmplist[0]
-		tmplist = tmplist[1:]
+		parrent := tmplist[0]; tmplist = tmplist[1:]
 		//fmt.Printf("parrent %c\n", parrent.name)
 
 		for char, child := range parrent.next { // 从root开始遍历所有节点， 首先获得root的子节点们
@@ -82,10 +98,6 @@ func (ac Ac) Build() {
 						break
 					}
 					failAcNode = failAcNode.fail
-				}
-				if failAcNode == nil { // 最终的fail均指向root节点
-					child.fail = ac.root
-					//fmt.Printf("direct %c fail to root\n", child.name)
 				}
 			}
 
@@ -123,5 +135,5 @@ func (ac Ac) Match(content string) (results []string) {
 			}
 		}
 	}
-	return
+	return results
 }
